@@ -22,7 +22,6 @@ deploy-on-commit:
     - helm ls
   rules:
     - if: '$CI_PIPELINE_SOURCE == "push"'
-      when: on-success
 
 deploy-daily:
   stage: deploy
@@ -31,4 +30,4 @@ deploy-daily:
     - helm ls
   rules:
     - if: '$CI_PIPELINE_SOURCE == "schedule"'
-      when: on-success
+
