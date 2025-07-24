@@ -1,0 +1,34 @@
+image:
+  name: alpine/helm:3
+  entrypoint: ["/bin/sh", "-c"]
+
+stages:
+  - deploy
+
+deploy-manual:
+  stage: deploy
+  script:
+    - echo "Deploying manually..."
+    - helm ls
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "web"'
+      when: manual
+      allow_failure: false
+
+deploy-on-commit:
+  stage: deploy
+  script:
+    - echo "Deploying on commit..."
+    - helm ls
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push"'
+      when: on-success
+
+deploy-daily:
+  stage: deploy
+  script:
+    - echo "Deploying daily..."
+    - helm ls
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+      when: on-success
